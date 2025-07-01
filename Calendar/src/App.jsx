@@ -1,35 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [dayinMonth, setDayinMoth] = useState([]);
+  const [startDay, setStartDay] = useState(0);
+  const [selectedDate, setSelectedDate] = useState(null);
+  console.log(currentDate);
+  console.log(dayinMonth, selectedDate, startDay);
 
+  useEffect(() => {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    const date = new Date(year, month, 1);
+    const days = [];
+    while (date.getMonth() === month) {
+      days.push(new Date(date));
+      date.setDate(date.getDate() - 1);
+    }
+    setDayinMoth(days);
+    setCurrentDate(new Date(year, month, 1).getDay());
+  }, [currentDate]);
+
+  const dayMonth = ["MON", "Tue", "Web", "Thu", "Fri", "Sat", "Sun"];
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="calender">
+      <div className="header">&lt;</div>
+    </div>
+  );
 }
 
-export default App
+export default App;
